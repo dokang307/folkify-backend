@@ -1,5 +1,6 @@
 package com.folkify.admin.dto;
 
+import com.folkify.auth.entity.Plan;
 import com.folkify.instrument.entity.Lesson;
 
 import java.util.ArrayList;
@@ -19,7 +20,11 @@ public record LessonAdminResponse(
         List<String> tips,
         int xp,
         String youtubeUrl,
-        int orderIndex
+        int orderIndex,
+        Plan requiredPlan,
+        String youtubeVideoId,
+        String channelName,
+        String sourceUrl
 ) {
     public static LessonAdminResponse from(Lesson l) {
         return new LessonAdminResponse(
@@ -28,7 +33,8 @@ public record LessonAdminResponse(
                 l.getInstrument().getName(),
                 l.getSlug(), l.getTitle(), l.getDuration(), l.getLevel(),
                 l.getDescription(), new ArrayList<>(l.getSteps()), new ArrayList<>(l.getTips()),
-                l.getXp(), l.getYoutubeUrl(), l.getOrderIndex()
+                l.getXp(), l.getYoutubeUrl(), l.getOrderIndex(),
+                l.getRequiredPlan(), l.getYoutubeVideoId(), l.getChannelName(), l.getSourceUrl()
         );
     }
 }

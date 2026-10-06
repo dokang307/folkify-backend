@@ -25,8 +25,8 @@ spring:
 
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: ${MAX_UPLOAD_FILE_SIZE:26MB}
+      max-request-size: ${MAX_UPLOAD_REQUEST_SIZE:27MB}
 
   mail:
     host: ${MAIL_HOST:smtp.gmail.com}
@@ -50,6 +50,8 @@ payos:
   checksum-key: ${PAYOS_CHECKSUM_KEY:}
   return-url: ${PAYOS_RETURN_URL:http://localhost:8080/api/payments/result}
   cancel-url: ${PAYOS_CANCEL_URL:http://localhost:8080/api/payments/result}
+  web-return-url: ${PAYOS_WEB_RETURN_URL:http://localhost:3001/pricing/result}
+  web-cancel-url: ${PAYOS_WEB_CANCEL_URL:http://localhost:3001/pricing/result}
   plan-duration-days: ${PAYOS_PLAN_DURATION_DAYS:30}
   plan-prices:
     BASIC: ${PAYOS_PRICE_BASIC:49000}
@@ -67,3 +69,21 @@ app:
   base-url: ${BASE_URL:http://localhost:8080}
   deep-link:
     base-url: ${DEEP_LINK_BASE_URL:folkify:///reset-password}
+
+folkify:
+  entitlement:
+    ai-monthly-quota:
+      FREE: ${AI_QUOTA_FREE:0}
+      BASIC: ${AI_QUOTA_BASIC:10}
+      PRO: ${AI_QUOTA_PRO:50}
+    history-days:
+      FREE: ${AI_HISTORY_DAYS_FREE:30}
+      BASIC: ${AI_HISTORY_DAYS_BASIC:30}
+  quiz:
+    pass-percent: ${QUIZ_PASS_PERCENT:70}
+  ai:
+    base-url: ${AI_SERVICE_URL:http://localhost:8000}
+    # Bản ghi tới 6 phút: pyin + DTW có thể mất cả phút trên CPU yếu
+    timeout-ms: ${AI_SERVICE_TIMEOUT_MS:180000}
+    max-upload-bytes: ${AI_MAX_UPLOAD_BYTES:26214400}
+    max-page-size: ${AI_HISTORY_MAX_PAGE_SIZE:50}

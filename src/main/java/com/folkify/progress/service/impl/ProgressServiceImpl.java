@@ -1,5 +1,6 @@
 package com.folkify.progress.service.impl;
 
+import com.folkify.entitlement.service.PlanPolicy;
 import com.folkify.auth.entity.User;
 import com.folkify.common.exception.ApiException;
 import com.folkify.common.exception.ErrorCode;
@@ -29,6 +30,7 @@ public class ProgressServiceImpl implements ProgressService {
     private final DailyActivityRepository dailyActivityRepo;
     private final LessonRepository lessonRepo;
     private final InstrumentRepository instrumentRepo;
+    private final PlanPolicy planPolicy;
 
     public ProgressServiceImpl(
             UserLessonProgressRepository progressRepo,
@@ -36,13 +38,15 @@ public class ProgressServiceImpl implements ProgressService {
             UserAchievementRepository userAchievementRepo,
             DailyActivityRepository dailyActivityRepo,
             LessonRepository lessonRepo,
-            InstrumentRepository instrumentRepo) {
+            InstrumentRepository instrumentRepo,
+            PlanPolicy planPolicy) {
         this.progressRepo = progressRepo;
         this.achievementRepo = achievementRepo;
         this.userAchievementRepo = userAchievementRepo;
         this.dailyActivityRepo = dailyActivityRepo;
         this.lessonRepo = lessonRepo;
         this.instrumentRepo = instrumentRepo;
+        this.planPolicy = planPolicy;
     }
 
     @Override
@@ -54,6 +58,9 @@ public class ProgressServiceImpl implements ProgressService {
 
         Lesson lesson = lessonRepo.findById(lessonId)
                 .orElseThrow(() -> new ApiException(ErrorCode.LESSON_NOT_FOUND));
+        if (!planPolicy.canAccess(user, lesson.getRequiredPlan())) {
+            throw new ApiException(ErrorCode.PLAN_REQUIRED);
+        }
 
         progressRepo.save(new UserLessonProgress(user, lesson));
 

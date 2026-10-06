@@ -1,5 +1,6 @@
 package com.folkify.admin.dto;
 
+import com.folkify.auth.entity.Plan;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,5 +18,9 @@ public record LessonRequest(
         List<String> tips,
         int xp,
         String youtubeUrl,
-        int orderIndex
+        int orderIndex,
+        Plan requiredPlan,
+        String youtubeVideoId,
+        String channelName,
+        String sourceUrl
 ) {}

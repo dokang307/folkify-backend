@@ -12,6 +12,9 @@ public interface UserLessonProgressRepository extends JpaRepository<UserLessonPr
 
     boolean existsByIdUserIdAndIdLessonId(UUID userId, UUID lessonId);
 
+    @Query("SELECT p.id.lessonId FROM UserLessonProgress p WHERE p.id.userId = :userId AND p.lesson.instrument.slug = :slug")
+    java.util.Set<UUID> findCompletedLessonIds(@Param("userId") UUID userId, @Param("slug") String instrumentSlug);
+
     @Query("SELECT COUNT(p) FROM UserLessonProgress p WHERE p.id.userId = :userId")
     long countCompletedByUser(@Param("userId") UUID userId);
 

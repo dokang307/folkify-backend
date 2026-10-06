@@ -1,5 +1,7 @@
 package com.folkify.payment.service.impl;
 
+import java.util.concurrent.atomic.AtomicLong;
+import com.folkify.payment.enumType.CheckoutPlatform;
 import com.folkify.auth.entity.Plan;
 import com.folkify.auth.entity.User;
 import com.folkify.common.exception.ApiException;
@@ -72,6 +74,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         txn.setStatus(TransactionStatus.PENDING);
         transactionRepo.saveAndFlush(txn);
 
+        boolean web = request.platformOrDefault() == CheckoutPlatform.WEB;
         try {
             PaymentLinkItem item = PaymentLinkItem.builder()
                     .name(description)
@@ -84,8 +87,8 @@ public class CheckoutServiceImpl implements CheckoutService {
                     .amount(price)
                     .description(description)
                     .item(item)
-                    .returnUrl(props.getReturnUrl())
-                    .cancelUrl(props.getCancelUrl())
+                    .returnUrl(web ? props.getWebReturnUrl() : props.getReturnUrl())
+                    .cancelUrl(web ? props.getWebCancelUrl() : props.getCancelUrl())
                     .build();
 
             CreatePaymentLinkResponse data = payOS.paymentRequests().create(payload);
@@ -111,9 +114,12 @@ public class CheckoutServiceImpl implements CheckoutService {
         return new PaymentStatusResponse(orderId, txn.getStatus(), txn.getTargetPlan());
     }
 
-    /** Sinh orderCode duy nhất (mili-giây hiện tại), tránh trùng với giao dịch đã lưu. */
+    /** orderCode cấp gần nhất trong process — chặn 2 checkout cùng mili-giây lấy trùng số. */
+    private static final AtomicLong LAST_ORDER_CODE = new AtomicLong();
+
+    /** Sinh orderCode duy nhất (tăng đơn điệu theo mili-giây), tránh trùng với giao dịch đã lưu. */
     private long generateOrderCode() {
-        long candidate = System.currentTimeMillis();
+        long candidate = LAST_ORDER_CODE.updateAndGet(prev -> Math.max(prev + 1, System.currentTimeMillis()));
         while (transactionRepo.existsByGatewayReferenceId(String.valueOf(candidate))) {
             candidate++;
         }

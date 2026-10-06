@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/auth/reset-password/open").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/instruments/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/blog/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/plans").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/payments/webhooks/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/payments/result").permitAll()
                         .requestMatchers(

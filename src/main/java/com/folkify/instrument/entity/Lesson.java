@@ -1,5 +1,6 @@
 package com.folkify.instrument.entity;
 
+import com.folkify.auth.entity.Plan;
 import com.folkify.infrastructure.persistence.BaseEntity;
 import jakarta.persistence.*;
 
@@ -43,6 +44,19 @@ public class Lesson extends BaseEntity {
     private String youtubeUrl;
     private int orderIndex;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "required_plan", nullable = false, length = 10)
+    private Plan requiredPlan = Plan.FREE;
+
+    @Column(name = "youtube_video_id", length = 20)
+    private String youtubeVideoId;
+
+    @Column(name = "channel_name")
+    private String channelName;
+
+    @Column(name = "source_url", columnDefinition = "TEXT")
+    private String sourceUrl;
+
     public Lesson() {}
 
     public Instrument getInstrument() { return instrument; }
@@ -56,6 +70,10 @@ public class Lesson extends BaseEntity {
     public int getXp() { return xp; }
     public String getYoutubeUrl() { return youtubeUrl; }
     public int getOrderIndex() { return orderIndex; }
+    public Plan getRequiredPlan() { return requiredPlan; }
+    public String getYoutubeVideoId() { return youtubeVideoId; }
+    public String getChannelName() { return channelName; }
+    public String getSourceUrl() { return sourceUrl; }
 
     public void setInstrument(Instrument instrument) { this.instrument = instrument; }
     public void setSlug(String slug) { this.slug = slug; }
@@ -68,4 +86,8 @@ public class Lesson extends BaseEntity {
     public void setXp(int xp) { this.xp = xp; }
     public void setYoutubeUrl(String youtubeUrl) { this.youtubeUrl = youtubeUrl; }
     public void setOrderIndex(int orderIndex) { this.orderIndex = orderIndex; }
+    public void setRequiredPlan(Plan requiredPlan) { this.requiredPlan = requiredPlan != null ? requiredPlan : Plan.FREE; }
+    public void setYoutubeVideoId(String youtubeVideoId) { this.youtubeVideoId = youtubeVideoId; }
+    public void setChannelName(String channelName) { this.channelName = channelName; }
+    public void setSourceUrl(String sourceUrl) { this.sourceUrl = sourceUrl; }
 }

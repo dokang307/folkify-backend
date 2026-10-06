@@ -165,6 +165,10 @@ public class AdminServiceImpl implements AdminService {
         lesson.setXp(req.xp());
         lesson.setYoutubeUrl(req.youtubeUrl());
         lesson.setOrderIndex(req.orderIndex());
+        lesson.setRequiredPlan(req.requiredPlan());
+        lesson.setYoutubeVideoId(req.youtubeVideoId());
+        lesson.setChannelName(req.channelName());
+        lesson.setSourceUrl(req.sourceUrl());
         return LessonAdminResponse.from(lessonRepository.save(lesson));
     }
 
@@ -188,6 +192,10 @@ public class AdminServiceImpl implements AdminService {
         lesson.setXp(req.xp());
         if (req.youtubeUrl() != null)  lesson.setYoutubeUrl(req.youtubeUrl());
         lesson.setOrderIndex(req.orderIndex());
+        if (req.requiredPlan() != null)   lesson.setRequiredPlan(req.requiredPlan());
+        if (req.youtubeVideoId() != null) lesson.setYoutubeVideoId(req.youtubeVideoId());
+        if (req.channelName() != null)    lesson.setChannelName(req.channelName());
+        if (req.sourceUrl() != null)      lesson.setSourceUrl(req.sourceUrl());
         return LessonAdminResponse.from(lessonRepository.save(lesson));
     }
 
@@ -222,6 +230,9 @@ public class AdminServiceImpl implements AdminService {
         song.setArtist(req.artist());
         song.setDuration(req.duration());
         song.setOrderIndex(req.orderIndex());
+        song.setRequiredPlan(req.requiredPlan());
+        song.setSourceUrl(req.sourceUrl());
+        song.setAttribution(req.attribution());
         return SongAdminResponse.from(songRepository.save(song));
     }
 
@@ -239,6 +250,9 @@ public class AdminServiceImpl implements AdminService {
         if (req.artist() != null)   song.setArtist(req.artist());
         if (req.duration() != null) song.setDuration(req.duration());
         song.setOrderIndex(req.orderIndex());
+        if (req.requiredPlan() != null) song.setRequiredPlan(req.requiredPlan());
+        if (req.sourceUrl() != null)    song.setSourceUrl(req.sourceUrl());
+        if (req.attribution() != null)  song.setAttribution(req.attribution());
         return SongAdminResponse.from(songRepository.save(song));
     }
 

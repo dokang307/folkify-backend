@@ -1,5 +1,6 @@
 package com.folkify.admin.dto;
 
+import com.folkify.auth.entity.Plan;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,5 +11,8 @@ public record SongRequest(
         @NotBlank String title,
         String artist,
         String duration,
-        int orderIndex
+        int orderIndex,
+        Plan requiredPlan,
+        String sourceUrl,
+        String attribution
 ) {}

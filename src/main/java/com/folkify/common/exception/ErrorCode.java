@@ -23,6 +23,7 @@ public enum ErrorCode {
     SONG_NOT_FOUND(1103, "Không tìm thấy bài hát", HttpStatus.NOT_FOUND),
     SHEET_NOT_FOUND(1104, "Không tìm thấy sheet nhạc", HttpStatus.NOT_FOUND),
     BLOG_POST_NOT_FOUND(1105, "Không tìm thấy bài viết", HttpStatus.NOT_FOUND),
+    PLAN_REQUIRED(1106, "Bài học này cần nâng cấp gói để truy cập", HttpStatus.FORBIDDEN),
 
     // User (1200 - 1299)
     USER_NOT_FOUND(1200, "Không tìm thấy người dùng", HttpStatus.NOT_FOUND),
@@ -33,6 +34,13 @@ public enum ErrorCode {
     ALREADY_ON_PLAN(1301, "Bạn đang sử dụng gói này rồi", HttpStatus.CONFLICT),
     PAYMENT_NOT_FOUND(1302, "Không tìm thấy giao dịch thanh toán", HttpStatus.NOT_FOUND),
     PAYMENT_GATEWAY_ERROR(1303, "Lỗi kết nối cổng thanh toán", HttpStatus.BAD_GATEWAY),
+
+    // AI scoring (1310 - 1319)
+    AI_NOT_IN_PLAN(1310, "Gói hiện tại chưa hỗ trợ chấm điểm AI", HttpStatus.FORBIDDEN),
+    AI_QUOTA_EXCEEDED(1311, "Bạn đã dùng hết lượt chấm điểm AI tháng này", HttpStatus.TOO_MANY_REQUESTS),
+    AUDIO_INVALID(1312, "File ghi âm không hợp lệ", HttpStatus.UNPROCESSABLE_ENTITY),
+    AI_SERVICE_UNAVAILABLE(1313, "Hệ thống chấm điểm đang bận, vui lòng thử lại sau", HttpStatus.SERVICE_UNAVAILABLE),
+    REFERENCE_NOT_READY(1315, "Tác phẩm này chưa có bản mẫu để AI chấm điểm", HttpStatus.CONFLICT),
 
     // General (4000+)
     VALIDATION_ERROR(4000, "Dữ liệu không hợp lệ", HttpStatus.BAD_REQUEST),

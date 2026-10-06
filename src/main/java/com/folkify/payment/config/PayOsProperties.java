@@ -24,6 +24,10 @@ public class PayOsProperties {
     /** URL PayOS redirect trình duyệt về khi user hủy thanh toán. */
     private String cancelUrl;
 
+    /** URL PayOS redirect về web app khi thanh toán thành công / hủy (luồng thanh toán từ trình duyệt). */
+    private String webReturnUrl;
+    private String webCancelUrl;
+
     /** Bảng giá theo gói (VND). Ví dụ: BASIC=49000, PRO=99000. */
     private Map<Plan, Long> planPrices = new EnumMap<>(Plan.class);
 
@@ -40,6 +44,10 @@ public class PayOsProperties {
     public void setReturnUrl(String returnUrl) { this.returnUrl = returnUrl; }
     public String getCancelUrl() { return cancelUrl; }
     public void setCancelUrl(String cancelUrl) { this.cancelUrl = cancelUrl; }
+    public String getWebReturnUrl() { return webReturnUrl; }
+    public void setWebReturnUrl(String webReturnUrl) { this.webReturnUrl = webReturnUrl; }
+    public String getWebCancelUrl() { return webCancelUrl; }
+    public void setWebCancelUrl(String webCancelUrl) { this.webCancelUrl = webCancelUrl; }
     public Map<Plan, Long> getPlanPrices() { return planPrices; }
     public void setPlanPrices(Map<Plan, Long> planPrices) { this.planPrices = planPrices; }
     public int getPlanDurationDays() { return planDurationDays; }
